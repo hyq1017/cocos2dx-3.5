@@ -27,9 +27,12 @@ public:
 	bool CleanUp();
 	void setKind(TetrisKind kind){ m_kind = kind; }
 	TetrisKind getKind(){ return m_kind; }
+	void setSpeed(const int& speed){ m_speed = speed; }
+	int getSpeed(){ return m_speed; }
 private:
 	Block m_block;
 	TetrisKind m_kind;
+	int m_speed;
 private:
 	//no copy
 	Tetris(const Tetris&);

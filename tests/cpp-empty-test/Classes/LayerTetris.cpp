@@ -316,7 +316,7 @@ void Layer_Tetris::CreateNextTetris()
 	{
 		delete(l_s_p_tetris);
 	}
-	l_s_p_tetris = Tetris::Create(TetrisKind(rand() % E_4_2));
+	l_s_p_tetris = Tetris::Create(TetrisKind(rand() % E_5_4));
 }
 
 void Layer_Tetris::onExit()

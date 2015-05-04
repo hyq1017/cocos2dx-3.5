@@ -52,13 +52,30 @@ Tetris* Tetris::Create(TetrisKind kind)
 	{
 		t->m_block.row = -1;
 	}break;
+	case E_5_1:
+	{
+		t->m_block.row = -1;
+	}break;
+	case E_5_2:
+	{
+		t->m_block.row = -2;
+	}break;
+	case E_5_3:
+	{
+		t->m_block.row = -2;
+	}break;
+	case E_5_4:
+	{
+		t->m_block.row = -2;
+	}break;
 	default:
 		break;
 	}
 	return t;
 }
 
-Tetris::Tetris()
+Tetris::Tetris():
+m_speed(1)
 {
 
 }
@@ -140,7 +157,7 @@ bool Tetris::Ok()
 		return false;
 	}
 
-	bool ret = false;
+	bool ret = true;;
 	switch (m_kind)
 	{
 	case E_1://田
@@ -151,10 +168,6 @@ bool Tetris::Ok()
 		{
 			CCLOG("E1:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
-		}
-		else
-		{
-			ret = true;
 		}
 	}
 		break;
@@ -169,10 +182,6 @@ bool Tetris::Ok()
 			CCLOG("E1:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
-		{
-			ret = true;
-		}
 	}
 		break;
 	case E_2_2:
@@ -184,10 +193,6 @@ bool Tetris::Ok()
 		{
 			CCLOG("E1:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
-		}
-		else
-		{
-			ret = true;
 		}
 		break;
 	case E_3_1:
@@ -201,10 +206,6 @@ bool Tetris::Ok()
 			CCLOG("E4:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
-		{
-			ret = true;
-		}
 	}break;
 	case E_3_2:
 	{
@@ -216,10 +217,6 @@ bool Tetris::Ok()
 			CCLOG("E4:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
-		{
-			ret = true;
-		}
 	}break;
 	case E_3_3:
 	{
@@ -229,10 +226,6 @@ bool Tetris::Ok()
 		{
 			CCLOG("E4:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
-		}
-		else
-		{
-			ret = true;
 		}
 	}break;
 	case E_3_4:
@@ -245,42 +238,91 @@ bool Tetris::Ok()
 			CCLOG("E4:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
-		{
-			ret = true;
-		}
 	}break;
 	case E_4_1:
 	{
 		if ((m_block.row-1 >= 0)
 			&& (g_marks[m_block.row][m_block.column].is_block
-			| g_marks[m_block.row][m_block.column +1].is_block
+			|| g_marks[m_block.row][m_block.column +1].is_block
 			|| g_marks[m_block.row + 1][m_block.column + 1].is_block
 			|| g_marks[m_block.row -1][m_block.column ].is_block))
 		{
 			CCLOG("E4:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
-		{
-			ret = true;
-		}
 	}break;
 	case E_4_2:
 	{
 		if ((m_block.row-1  >= 0)
 			&& (g_marks[m_block.row][m_block.column].is_block
-			| g_marks[m_block.row][m_block.column - 1].is_block
+			|| g_marks[m_block.row][m_block.column - 1].is_block
 			|| g_marks[m_block.row - 1][m_block.column + 1].is_block
 			|| g_marks[m_block.row - 1][m_block.column].is_block))
 		{
 			CCLOG("E_4_2:no ok, row:%d column:%d", m_block.row, m_block.column);
 			ret = false;
 		}
-		else
+	}break;
+	case E_5_1:
+	{
+		if ((m_block.row  >= 0)
+			&& (g_marks[m_block.row][m_block.column].is_block
+			|| g_marks[m_block.row][m_block.column - 1].is_block
+			|| g_marks[m_block.row][m_block.column + 1].is_block))
 		{
-			ret = true;
+			CCLOG("E_5_1:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
 		}
+	}break;
+	case E_5_2:
+	{
+		
+		if ((m_block.row >= 0)
+			&& g_marks[m_block.row][m_block.column + 1].is_block)
+		{
+			CCLOG("E_5_2:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+		if (m_block.row + 1 >= 0 && (g_marks[m_block.row + 1][m_block.column].is_block))
+		{
+			CCLOG("E_5_2:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+
+	}break;
+	case E_5_3:
+	{
+
+		if ((m_block.row >= 0)
+			&& (g_marks[m_block.row][m_block.column + 1].is_block
+				|| g_marks[m_block.row][m_block.column -1].is_block))
+		{
+			CCLOG("E_5_3:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+		if (m_block.row + 1 >= 0 && (g_marks[m_block.row + 1][m_block.column].is_block))
+		{
+			CCLOG("E_5_3:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+
+	}break;
+	case E_5_4:
+	{
+
+		if ((m_block.row >= 0)
+			&& (g_marks[m_block.row][m_block.column ].is_block
+			|| g_marks[m_block.row][m_block.column - 1].is_block))
+		{
+			CCLOG("E_5_4:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+		if (m_block.row + 1 >= 0 && (g_marks[m_block.row + 1][m_block.column].is_block))
+		{
+			CCLOG("E_5_4:no ok, row:%d column:%d", m_block.row, m_block.column);
+			ret = false;
+		}
+
 	}break;
 	default:
 		break;
@@ -426,6 +468,68 @@ void Tetris::Convert()
 			g_marks[m_block.row - 1][m_block.column+1] = m_block;
 		}
 	}break;
+	case E_5_1:
+	{
+		if (m_block.row >= 0)
+		{
+			g_marks[m_block.row][m_block.column] = m_block;
+			g_marks[m_block.row][m_block.column - 1] = m_block;
+			g_marks[m_block.row][m_block.column + 1] = m_block;
+
+		}
+		if (m_block.row - 1 >= 0)
+		{
+			g_marks[m_block.row - 1][m_block.column] = m_block;
+		}
+	}break;
+	case E_5_2:
+	{
+		if (m_block.row >= 0)
+		{
+			g_marks[m_block.row][m_block.column] = m_block;
+			g_marks[m_block.row][m_block.column + 1] = m_block;
+
+		}
+		if (m_block.row - 1 >= 0)
+		{
+			g_marks[m_block.row - 1][m_block.column] = m_block;
+		}
+		if (m_block.row + 1 >= 0)
+		{
+			g_marks[m_block.row + 1][m_block.column] = m_block;
+		}
+	}break;
+	case E_5_3:
+	{
+		if (m_block.row >= 0)
+		{
+			g_marks[m_block.row][m_block.column-1] = m_block;
+			g_marks[m_block.row][m_block.column] = m_block;
+			g_marks[m_block.row][m_block.column + 1] = m_block;
+
+		}
+		if (m_block.row + 1 >= 0)
+		{
+			g_marks[m_block.row + 1][m_block.column] = m_block;
+		}
+	}break;
+	case E_5_4:
+	{
+		if (m_block.row - 1 >= 0)
+		{
+			g_marks[m_block.row - 1][m_block.column] = m_block;
+		}
+		if (m_block.row >= 0)
+		{
+			g_marks[m_block.row][m_block.column - 1] = m_block;
+			g_marks[m_block.row][m_block.column] = m_block;
+
+		}
+		if (m_block.row + 1 >= 0)
+		{
+			g_marks[m_block.row + 1][m_block.column] = m_block;
+		}
+	}break;
 	default:
 		break;
 	}
@@ -508,6 +612,34 @@ bool Tetris::EdgeOk()
 			ret = false;
 		}
 	}break;
+	case E_5_1:
+	{
+		if (m_block.column + 1 >= C_COLUMN || m_block.column - 1 < 0 || m_block.row >= C_ROW)
+		{
+			ret = false;
+		}
+	}break;
+	case E_5_2:
+	{
+		if (m_block.column + 1 >= C_COLUMN || m_block.column  < 0 || m_block.row+1 >= C_ROW)
+		{
+			ret = false;
+		}
+	}break;
+	case E_5_3:
+	{
+		if (m_block.column + 1 >= C_COLUMN || m_block.column-1 < 0 || m_block.row + 1 >= C_ROW)
+		{
+			ret = false;
+		}
+	}break;
+	case E_5_4:
+	{
+		if (m_block.column  >= C_COLUMN || m_block.column-1 < 0 || m_block.row + 1 >= C_ROW)
+		{
+			ret = false;
+		}
+	}break;
 	default:
 		break;
 	}
@@ -525,7 +657,6 @@ void Tetris::Transform()
 	case E_2_1:
 	{
 		m_kind = E_2_2;
-		//m_block.row
 
 		if (Ok())
 		{
@@ -556,8 +687,12 @@ void Tetris::Transform()
 		break;
 	case E_3_1:
 	{
-		int e3[] = {  E_3_2, E_3_3, E_3_4 };
-		m_kind = TetrisKind(e3[rand() % 3]);;//rand(E_3_2, E_3_2);
+		int tmp = m_kind + 1;
+		if (tmp > E_3_4 || tmp == E_3_1)
+		{
+			tmp = E_3_2;
+		}
+		m_kind = TetrisKind(tmp);
 		if (Ok())
 		{
 			return;
@@ -570,8 +705,12 @@ void Tetris::Transform()
 	}break;
 	case E_3_2:
 	{
-		int e3[] = { E_3_1,  E_3_3, E_3_4 };
-		m_kind = TetrisKind(e3[rand() % 3]);;//rand(E_3_2, E_3_2);
+		int tmp = m_kind + 1;
+		if (tmp > E_3_4 || tmp == E_3_2)
+		{
+			tmp = E_3_1;
+		}
+		m_kind = TetrisKind(tmp);
 		if (Ok())
 		{
 			return;
@@ -584,8 +723,12 @@ void Tetris::Transform()
 	}break;
 	case E_3_3:
 	{
-		int e3[] = { E_3_1, E_3_2,  E_3_4 };
-		m_kind = TetrisKind(e3[rand()%3]);//rand(E_3_2, E_3_2);
+		int tmp = m_kind + 1;
+		if (tmp > E_3_4 || tmp == E_3_3)
+		{
+			tmp = E_3_1;
+		}
+		m_kind = TetrisKind(tmp);
 		if (Ok())
 		{
 			return;
@@ -598,8 +741,12 @@ void Tetris::Transform()
 	}break;
 	case E_3_4:
 	{
-		int e3[] = { E_3_1, E_3_2, E_3_3 };
-		m_kind = TetrisKind(e3[rand() % 3]);//rand(E_3_2, E_3_2);
+		int tmp = m_kind + 1;
+		if (tmp > E_3_3)
+		{
+			tmp = E_3_1;
+		}
+		m_kind = TetrisKind(tmp);
 		if (Ok())
 		{
 			return;
@@ -636,6 +783,78 @@ void Tetris::Transform()
 			return;
 		}
 	}break;
+	case E_5_1:
+	{
+		int tmp = m_kind + 1;
+		if (tmp > E_5_4 || tmp == E_5_1)
+		{
+			tmp = E_5_2;
+		}
+		m_kind = TetrisKind(tmp);
+		if (Ok())
+		{
+			return;
+		}
+		else
+		{
+			m_kind = E_5_1;
+			return;
+		}
+	}break;
+	case E_5_2:
+	{
+		int tmp = m_kind + 1;
+		if (tmp > E_5_4 || tmp == E_5_2)
+		{
+			tmp = E_5_1;
+		}
+		m_kind = TetrisKind(tmp);
+		if (Ok())
+		{
+			return;
+		}
+		else
+		{
+			m_kind = E_5_2;
+			return;
+		}
+	}break;
+	case E_5_3:
+	{
+		int tmp = m_kind + 1;
+		if (tmp > E_5_4 || tmp == E_5_3)
+		{
+			tmp = E_5_1;
+		}
+		m_kind = TetrisKind(tmp);
+		if (Ok())
+		{
+			return;
+		}
+		else
+		{
+			m_kind = E_5_3;
+			return;
+		}
+	}break;
+	case E_5_4:
+	{
+		int tmp = m_kind + 1;
+		if (tmp > E_5_3)
+		{
+			tmp = E_5_1;
+		}
+		m_kind = TetrisKind(tmp);
+		if (Ok())
+		{
+			return;
+		}
+		else
+		{
+			m_kind = E_5_4;
+			return;
+		}
+	}break;
 	default:
 		break;
 	}
@@ -655,11 +874,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
-		//return ret;
 	}
 		break;
 	case E_2_1://竖直线
@@ -668,11 +882,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
-		//return ret;
 	}
 		break;
 	case E_2_2://横直线
@@ -685,11 +894,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
-		//return ret;
 	}
 		break;
 	case E_3_1://竖L
@@ -702,10 +906,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
 	}break;
 	case E_3_2://
 	{
@@ -716,10 +916,6 @@ bool Tetris::IsBottom()
 			//|| g_marks[m_block.row + 1][m_block.column + 2].is_block)
 		{
 			ret = true;
-		}
-		else
-		{
-			ret = false;
 		}
 	}break;
 	case E_3_3://
@@ -732,10 +928,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
 	}break;
 	case E_3_4://
 	{
@@ -747,10 +939,6 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
-		{
-			ret = false;
-		}
 	}break;
 	case E_4_1://
 	{
@@ -759,10 +947,6 @@ bool Tetris::IsBottom()
 			|| g_marks[m_block.row + 2][m_block.column +1].is_block)
 		{
 			ret = true;
-		}
-		else
-		{
-			ret = false;
 		}
 	}break;
 	case E_4_2://
@@ -774,9 +958,36 @@ bool Tetris::IsBottom()
 		{
 			ret = true;
 		}
-		else
+	}break;
+	case E_5_1://
+	{
+		if (m_block.row + 1 >= C_ROW_BOTTOM
+			|| g_marks[m_block.row+1][m_block.column + 1].is_block
+			|| g_marks[m_block.row +1][m_block.column].is_block
+			|| g_marks[m_block.row +1][m_block.column - 1].is_block)
 		{
-			ret = false;
+			ret = true;
+		}
+	}break;
+	case E_5_2://
+	{
+		if (m_block.row + 2 >= C_ROW_BOTTOM || (m_block.row + 2 >= 0 && g_marks[m_block.row + 2][m_block.column].is_block))
+		{
+			ret = true;
+		}
+	}break;
+	case E_5_3://
+	{
+		if (m_block.row + 2 >= C_ROW_BOTTOM || (m_block.row + 2 >= 0 && g_marks[m_block.row + 2][m_block.column].is_block))
+		{
+			ret = true;
+		}
+	}break;
+	case E_5_4://
+	{
+		if (m_block.row + 2 >= C_ROW_BOTTOM || (m_block.row + 2 >= 0 && g_marks[m_block.row + 2][m_block.column].is_block))
+		{
+			ret = true;
 		}
 	}break;
 	default:
