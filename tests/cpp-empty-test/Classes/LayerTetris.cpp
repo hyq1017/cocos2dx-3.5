@@ -283,7 +283,10 @@ void Layer_Tetris::menuCallback(Ref* sender)
 	{
 	case ID_ITEM_BACK:
 	{
-		Director::getInstance()->replaceScene(SceneLobby::scene());
+		static float t = 1.0;
+		t = t - 0.1;
+		setSpeed(t);
+		//Director::getInstance()->replaceScene(SceneLobby::scene());
 	}break;
 	case ID_ITEM_LEFT:
 	{
@@ -386,4 +389,11 @@ void Layer_Tetris::event_restart()
 	CreateNextTetris();
 	DrawTetris();
 	UpdateScore();
+}
+
+void Layer_Tetris::setSpeed(const float t)
+{
+	float tt = t > 0.1 ? t: 0.1;
+	unschedule(schedule_selector(Layer_Tetris::Loop));
+	schedule(schedule_selector(Layer_Tetris::Loop), tt);
 }

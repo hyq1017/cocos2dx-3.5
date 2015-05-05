@@ -17,6 +17,7 @@ public:
 	static Scene* scene();
 	static Layer_Tetris* create();
 	bool init();
+	void setSpeed(const float t);
 	void StartTimer();
 	void StopTimer();
 	void Loop(float);
