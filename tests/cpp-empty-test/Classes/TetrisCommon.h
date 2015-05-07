@@ -1,17 +1,47 @@
 #ifndef  __TETRIS_COMMON_H__
 #define __TETRIS_COMMON_H__
+#include "cocos2d.h"
+using namespace cocos2d;
 
 #pragma  once
 
 //每个方块的长度和宽度
-const int C_W_RECT = 30;
-const int C_H_RECT = 30;
+const int C_W_RECT = 12;
+const int C_H_RECT = 12;
+
+const int C_W_RECT_2 = 5;
+const int C_H_RECT_2 = 5;
+
+
 
 //行数和列数
 const int C_ROW = 20;
 const int C_COLUMN = 20;
 
 const int C_ROW_BOTTOM = C_ROW;
+
+const int C_SPACE = 1;
+
+//橙色
+const Color4B myColor4BOrange = Color4B(255, 127, 0, 255);
+
+//青色
+const Color4B myColor4BCyan = Color4B(0, 255, 255, 255);
+//橄榄
+const Color4B myColor4BOlive = Color4B(128, 128, 0, 255);
+//银白
+const Color4B myColor4BSilver = Color4B(192, 192, 192, 255);
+
+//深紫罗兰的蓝色
+const Color4B myColor4BBlueViolet = Color4B(138, 43, 226, 255);
+//深天蓝
+const Color4B myColor4BDeepSkyBlue = Color4B(0, 191, 255, 255);
+
+//
+const Color4B myColor4BDeepAqua = Color4B(60, 179, 113, 255);
+
+//
+const Color4B myColor4BYellow= Color4B(255, 255, 0, 255);
 
 enum TetrisKind
 {

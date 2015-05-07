@@ -1,5 +1,6 @@
 #include "SceneLobby.h"
 #include "LayerTetris.h"
+#include "LayerTetrisWifi.h"
 
 
 using namespace std;
@@ -36,19 +37,19 @@ bool SceneLobby::init()
 	auto blank = 30;
 	float y = origin.y + visibleSize.height / 2;
 
-	auto l_start = Label::createWithTTF(ttfConfig, "START GAME");
-	auto l_rank = Label::createWithTTF(ttfConfig, "RANK");
-	auto l_help = Label::createWithTTF(ttfConfig, "HELP");
+	auto l_start = Label::createWithTTF(ttfConfig, "SINGLE");
+	auto l_rank = Label::createWithTTF(ttfConfig, "WIFI");
+	//auto l_help = Label::createWithTTF(ttfConfig, "HELP");
 
 	auto item_start = MenuItemLabel::create(l_start, CC_CALLBACK_1(SceneLobby::CallbackStart, this));
 	auto item_rank = MenuItemLabel::create(l_rank, CC_CALLBACK_1(SceneLobby::CallbackRank, this));
-	auto item_help = MenuItemLabel::create(l_help, CC_CALLBACK_1(SceneLobby::CallbackHelp, this));
+	//auto item_help = MenuItemLabel::create(l_help, CC_CALLBACK_1(SceneLobby::CallbackHelp, this));
 
-	item_start->setPosition(Vec2(origin.x + visibleSize.width / 2, y));
-	item_rank->setPosition(Vec2(origin.x + visibleSize.width / 2, y - 30));
-	item_help->setPosition(Vec2(origin.x + visibleSize.width / 2, y - 30 * 2));
+	item_start->setPosition(Vec2(origin.x + visibleSize.width / 2-40, y));
+	item_rank->setPosition(Vec2(origin.x + visibleSize.width / 2+40, y));
+	//item_help->setPosition(Vec2(origin.x + visibleSize.width / 2, y - 30 * 2));
 
-	auto menu = Menu::create(item_start, item_rank, item_help, nullptr);
+	auto menu = Menu::create(item_start, item_rank/*, item_help*/, nullptr);
 	menu->setPosition(Vec2(0, 0));
 	this->addChild(menu);
 
@@ -78,6 +79,7 @@ void SceneLobby::CallbackStart(Ref* sender)
 void SceneLobby::CallbackRank(Ref* sender)
 {
 	CCLOG("CallbackRank");
+	Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
 }
 
 void SceneLobby::CallbackHelp(Ref* sender)
