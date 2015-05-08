@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "TetrisCommon.h"
 
-extern Block g_marks[C_ROW][C_COLUMN];
+
 
 
 using namespace cocos2d;
@@ -45,6 +45,7 @@ private:
 	Sprite* m_tetris[C_ROW][C_COLUMN];
 	Label* m_label_score;
 	long m_score;
+
 private:
 	//no copy
 	Layer_Tetris(const Layer_Tetris&);

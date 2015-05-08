@@ -21,6 +21,7 @@ const int C_COLUMN = 20;
 const int C_ROW_BOTTOM = C_ROW;
 
 const int C_SPACE = 1;
+const int C_SPACE_TETRIS = 1;//俄罗斯方块之间的距离
 
 //橙色
 const Color4B myColor4BOrange = Color4B(255, 127, 0, 255);
@@ -65,12 +66,25 @@ struct Block
 	bool is_block;//当前格子是否有方块
 	int row;
 	int column;
-	/*struct Block Copy(struct Block b)
+	void copy(const struct Block& b)
 	{
-
-	}*/
+		is_block = b.is_block;
+		row = b.row;
+		column = b.column;
+	}
 };
 
+typedef Block(*BlocksPointer)[C_COLUMN];
 
+void CopyAllBlocks(BlocksPointer src, BlocksPointer dest);
+//{
+//	for (int i = 0; i < C_ROW; i++)
+//	{
+//		for (int j = 0; j < C_COLUMN; j++)
+//		{
+//			dest[i][j].copy(src[i][j]);
+//		}
+//	}
+//}
 
 #endif

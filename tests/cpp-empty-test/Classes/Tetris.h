@@ -3,7 +3,8 @@
 
 #include "TetrisCommon.h"
 
-extern Block g_marks[C_ROW][C_COLUMN];
+//extern Block g_marks[C_ROW][C_COLUMN];
+
 
 class Tetris
 {
@@ -29,10 +30,15 @@ public:
 	TetrisKind getKind(){ return m_kind; }
 	void setSpeed(const int& speed){ m_speed = speed; }
 	int getSpeed(){ return m_speed; }
+	void set(Block*[10]){};
+
+	void setBlocksPointer(BlocksPointer tmp);
+	BlocksPointer getBlocksPointer(){ return m_marks; };
 private:
 	Block m_block;
 	TetrisKind m_kind;
 	int m_speed;
+	Block m_marks[C_ROW][C_COLUMN];
 private:
 	//no copy
 	Tetris(const Tetris&);

@@ -122,6 +122,7 @@ bool Layer_Tetris::init()
 				int h = sp->getContentSize().height;
 				sp->setPosition(Vec2(pos_bg_tetris.x + j*w, pos_bg_tetris.y+size_bg_tetris.height - i*h));
 				//m_tetris[i][j]->setPosition(Vec2(0+j*C_W_RECT/2, win_size.height-i*C_H_RECT/2));
+				
 				sp->setVisible(false);
 				m_tetris[i][j] = sp;
 				addChild(sp);
@@ -203,7 +204,7 @@ void Layer_Tetris::DrawTetris()
 	{
 		for (int j = 0; j < C_COLUMN; j++)
 		{
-			m_tetris[i][j]->setVisible(g_marks[i][j].is_block);
+			m_tetris[i][j]->setVisible(l_s_p_tetris->getBlocksPointer()[i][j].is_block);
 		}
 	}
 }
@@ -283,10 +284,10 @@ void Layer_Tetris::menuCallback(Ref* sender)
 	{
 	case ID_ITEM_BACK:
 	{
-		static float t = 1.0;
+		/*static float t = 1.0;
 		t = t - 0.1;
-		setSpeed(t);
-		//Director::getInstance()->replaceScene(SceneLobby::scene());
+		setSpeed(t);*/
+		Director::getInstance()->replaceScene(SceneLobby::scene());
 	}break;
 	case ID_ITEM_LEFT:
 	{
@@ -315,11 +316,14 @@ void Layer_Tetris::menuCallback(Ref* sender)
 
 void Layer_Tetris::CreateNextTetris()
 {
+	Block blocks[C_ROW][C_COLUMN] = { 0 };
 	if (l_s_p_tetris)
 	{
+		CopyAllBlocks(l_s_p_tetris->getBlocksPointer(), blocks);
 		delete(l_s_p_tetris);
 	}
 	l_s_p_tetris = Tetris::Create(TetrisKind(rand() % E_5_4));
+	l_s_p_tetris->setBlocksPointer(blocks);
 }
 
 void Layer_Tetris::onExit()
@@ -382,7 +386,7 @@ void Layer_Tetris::event_restart()
 	{
 		for (int j = 0; j < C_COLUMN; j++)
 		{
-			g_marks[i][j].is_block = false;
+			//g_marks[i][j].is_block = false;
 		}
 	}
 
