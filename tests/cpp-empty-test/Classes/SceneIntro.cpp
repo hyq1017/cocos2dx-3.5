@@ -26,6 +26,8 @@ void SceneIntro::onEnter()
 {
 	Layer::onEnter();
 	Director::getInstance()->replaceScene(TransitionFade::create(1.0f, SceneLobby::scene(), Color3B::WHITE));
+
+	
 }
 
 void SceneIntro::onExit()

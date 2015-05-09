@@ -35,6 +35,9 @@
     <ClCompile Include="..\Classes\LayerTetrisWifi.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\tpb.cc">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -62,6 +65,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\LayerTetrisWifi.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\tpb.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
