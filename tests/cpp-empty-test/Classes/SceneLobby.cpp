@@ -1,6 +1,7 @@
 #include "SceneLobby.h"
 #include "LayerTetris.h"
 #include "LayerTetrisWifi.h"
+#include "tpb.h"
 
 
 using namespace std;
@@ -32,6 +33,10 @@ bool SceneLobby::init()
 	auto title = Label::createWithTTF("Hello Tetris", "fonts/aleta.ttf", 16);
 	title->setPosition(Vec2(winsize.width / 2, winsize.height - 50));
 	this->addChild(title);
+
+	hyq::protobuf::TestName *testname = new hyq::protobuf::TestName();
+	testname->set_name("hello, protobuf");
+	title->setString(testname->name());
 
 	TTFConfig ttfConfig("fonts/aleta.ttf", 10);
 	auto blank = 30;
