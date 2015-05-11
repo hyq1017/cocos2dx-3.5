@@ -38,6 +38,15 @@
     <ClCompile Include="..\Classes\tpb.cc">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\TetrisDispatchMsg.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TetrisMessage.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TetrisSocket.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -68,6 +77,15 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\tpb.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisDispatchMsg.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisMessage.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TetrisSocket.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

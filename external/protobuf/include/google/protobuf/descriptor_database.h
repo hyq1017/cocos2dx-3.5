@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// https://developers.google.com/protocol-buffers/
+// http://code.google.com/p/protobuf/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -41,7 +41,6 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -96,11 +95,10 @@ class LIBPROTOBUF_EXPORT DescriptorDatabase {
   //
   // This method has a default implementation that always returns
   // false.
-  virtual bool FindAllExtensionNumbers(const string& /* extendee_type */,
-                                       vector<int>* /* output */) {
+  virtual bool FindAllExtensionNumbers(const string& extendee_type,
+                                       vector<int>* output) {
     return false;
   }
-
 
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(DescriptorDatabase);
@@ -356,7 +354,6 @@ class LIBPROTOBUF_EXPORT MergedDescriptorDatabase : public DescriptorDatabase {
   // of the databases returned true.
   bool FindAllExtensionNumbers(const string& extendee_type,
                                vector<int>* output);
-
 
  private:
   vector<DescriptorDatabase*> sources_;

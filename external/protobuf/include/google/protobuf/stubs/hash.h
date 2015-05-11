@@ -1,6 +1,6 @@
 // Protocol Buffers - Google's data interchange format
 // Copyright 2008 Google Inc.  All rights reserved.
-// https://developers.google.com/protocol-buffers/
+// http://code.google.com/p/protobuf/
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -37,14 +37,13 @@
 
 #include <string.h>
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/stubs/pbconfig.h>
+#include "config.h"
 
-#if defined(GOOGLE_PROTOBUF_HAVE_HASH_MAP) && \
-    defined(GOOGLE_PROTOBUF_HAVE_HASH_SET)
-#include GOOGLE_PROTOBUF_HASH_MAP_H
-#include GOOGLE_PROTOBUF_HASH_SET_H
+#if defined(HAVE_HASH_MAP) && defined(HAVE_HASH_SET)
+#include HASH_MAP_H
+#include HASH_SET_H
 #else
-#define GOOGLE_PROTOBUF_MISSING_HASH
+#define MISSING_HASH
 #include <map>
 #include <set>
 #endif
@@ -52,7 +51,7 @@
 namespace google {
 namespace protobuf {
 
-#ifdef GOOGLE_PROTOBUF_MISSING_HASH
+#ifdef MISSING_HASH
 
 // This system doesn't have hash_map or hash_set.  Emulate them using map and
 // set.
@@ -91,22 +90,18 @@ template <typename Key, typename Data,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
 class hash_map : public std::map<Key, Data, HashFcn> {
- public:
-  hash_map(int = 0) {}
 };
 
 template <typename Key,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
 class hash_set : public std::set<Key, HashFcn> {
- public:
-  hash_set(int = 0) {}
 };
 
 #elif defined(_MSC_VER) && !defined(_STLPORT_VERSION)
 
 template <typename Key>
-struct hash : public GOOGLE_PROTOBUF_HASH_NAMESPACE::hash_compare<Key> {
+struct hash : public HASH_NAMESPACE::hash_compare<Key> {
 };
 
 // MSVC's hash_compare<const char*> hashes based on the string contents but
@@ -120,31 +115,27 @@ class CstringLess {
 
 template <>
 struct hash<const char*>
-    : public GOOGLE_PROTOBUF_HASH_NAMESPACE::hash_compare<
-        const char*, CstringLess> {};
+  : public HASH_NAMESPACE::hash_compare<const char*, CstringLess> {
+};
 
 template <typename Key, typename Data,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_map : public GOOGLE_PROTOBUF_HASH_NAMESPACE::hash_map<
+class hash_map : public HASH_NAMESPACE::hash_map<
     Key, Data, HashFcn> {
- public:
-  hash_map(int = 0) {}
 };
 
 template <typename Key,
           typename HashFcn = hash<Key>,
           typename EqualKey = int >
-class hash_set : public GOOGLE_PROTOBUF_HASH_NAMESPACE::hash_set<
+class hash_set : public HASH_NAMESPACE::hash_set<
     Key, HashFcn> {
- public:
-  hash_set(int = 0) {}
 };
 
 #else
 
 template <typename Key>
-struct hash : public GOOGLE_PROTOBUF_HASH_NAMESPACE::hash<Key> {
+struct hash : public HASH_NAMESPACE::hash<Key> {
 };
 
 template <typename Key>
@@ -167,26 +158,21 @@ struct hash<const char*> {
   }
 };
 
-template <typename Key, typename Data, typename HashFcn = hash<Key>,
+template <typename Key, typename Data,
+          typename HashFcn = hash<Key>,
           typename EqualKey = std::equal_to<Key> >
-class hash_map
-    : public GOOGLE_PROTOBUF_HASH_NAMESPACE::GOOGLE_PROTOBUF_HASH_MAP_CLASS<
-          Key, Data, HashFcn, EqualKey> {
- public:
-  hash_map(int = 0) {}
+class hash_map : public HASH_NAMESPACE::HASH_MAP_CLASS<
+    Key, Data, HashFcn, EqualKey> {
 };
 
-template <typename Key, typename HashFcn = hash<Key>,
+template <typename Key,
+          typename HashFcn = hash<Key>,
           typename EqualKey = std::equal_to<Key> >
-class hash_set
-    : public GOOGLE_PROTOBUF_HASH_NAMESPACE::GOOGLE_PROTOBUF_HASH_SET_CLASS<
-          Key, HashFcn, EqualKey> {
- public:
-  hash_set(int = 0) {}
+class hash_set : public HASH_NAMESPACE::HASH_SET_CLASS<
+    Key, HashFcn, EqualKey> {
 };
 
-#undef GOOGLE_PROTOBUF_MISSING_HASH
-#endif  // !GOOGLE_PROTOBUF_MISSING_HASH
+#endif
 
 template <>
 struct hash<string> {

@@ -149,6 +149,9 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\SceneLobby.cpp" />
     <ClCompile Include="..\Classes\Tetris.cpp" />
     <ClCompile Include="..\Classes\TetrisCommon.cpp" />
+    <ClCompile Include="..\Classes\TetrisDispatchMsg.cpp" />
+    <ClCompile Include="..\Classes\TetrisMessage.cpp" />
+    <ClCompile Include="..\Classes\TetrisSocket.cpp" />
     <ClCompile Include="..\Classes\tpb.cc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -161,6 +164,9 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\SceneLobby.h" />
     <ClInclude Include="..\Classes\Tetris.h" />
     <ClInclude Include="..\Classes\TetrisCommon.h" />
+    <ClInclude Include="..\Classes\TetrisDispatchMsg.h" />
+    <ClInclude Include="..\Classes\TetrisMessage.h" />
+    <ClInclude Include="..\Classes\TetrisSocket.h" />
     <ClInclude Include="..\Classes\tpb.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

@@ -1,6 +1,10 @@
 #ifndef  __TETRIS_COMMON_H__
 #define __TETRIS_COMMON_H__
 #include "cocos2d.h"
+#include "TetrisMessage.h"
+#include "TetrisSocket.h"
+#include <math.h>
+
 using namespace cocos2d;
 
 #pragma  once

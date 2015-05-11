@@ -2,7 +2,7 @@
 #include "LayerTetris.h"
 #include "LayerTetrisWifi.h"
 #include "tpb.h"
-
+#include <iostream>
 
 using namespace std;
 
@@ -34,9 +34,7 @@ bool SceneLobby::init()
 	title->setPosition(Vec2(winsize.width / 2, winsize.height - 50));
 	this->addChild(title);
 
-	hyq::protobuf::TestName *testname = new hyq::protobuf::TestName();
-	testname->set_name("hello, protobuf");
-	title->setString(testname->name());
+
 
 	TTFConfig ttfConfig("fonts/aleta.ttf", 10);
 	auto blank = 30;
@@ -66,7 +64,8 @@ bool SceneLobby::init()
 void SceneLobby::onEnter()
 {
 	Layer::onEnter();
-
+	
+	TetrisSocket::getInstance()->start("115.28.92.94", 7007); //("121.42.52.249", 5060);//("115.28.92.94", 7000);
 
 }
 
@@ -84,7 +83,49 @@ void SceneLobby::CallbackStart(Ref* sender)
 void SceneLobby::CallbackRank(Ref* sender)
 {
 	CCLOG("CallbackRank");
-	Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
+	//Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
+	
+
+	C2SLogin* loginbuf = new C2SLogin();
+	loginbuf->set_channelid(9999);
+	loginbuf->set_channelaccountid("2");
+	loginbuf->set_logintoken("test");
+	string s;
+	loginbuf->SerializeToString(&s);
+	string sTmp = loginbuf->SerializeAsString();
+	send_data sendData;
+	sendData.sign = 127;
+	sendData.len = s.length()+4;
+	sendData.body = (char*)s.c_str();
+
+
+	TetrisSocket::getInstance()->send_message(sendData);
+
+	delete loginbuf;
+	loginbuf = 0;
+
+	//char* begin = TetrisSocket::getInstance()->unsign_short_to_bytes(127);
+	//char* len = TetrisSocket::getInstance()->unsign_short_to_bytes(strlen(login.body)+4);
+	//char *tmp = new char(strlen(begin) + strlen(len) + s.length());
+	//memcpy(tmp, begin, strlen(begin));
+	//memcpy(tmp + strlen(begin), len, strlen(len));
+	//memcpy(tmp + strlen(begin) + strlen(begin), (char*)s.c_str(), s.length());
+	////login.totalLen = login.bodyLen + 1 + strlen(login.cmd) + 4;
+	//
+	//TetrisMessage* msg = new TetrisMessage(login.cmd, login.body);
+
+	
+	//TetrisSocket::getInstance()->sendMessage(tmp, strlen(begin) + strlen(begin) + s.length());
+	
+	//string  netMsg;
+	//loginbuf->SerializeToString(&netMsg);
+	//char* mark = TetrisSocket::getInstance()->unsign_short_to_bytes(127);
+	//char* length = TetrisSocket::getInstance()->unsign_short_to_bytes(netMsg.length() + 4);
+	//char* ss = TetrisSocket::getInstance()->unsign_short_to_bytes(127, false);
+
+	//log("ss");
+	//log(ss);
+	
 }
 
 void SceneLobby::CallbackHelp(Ref* sender)
