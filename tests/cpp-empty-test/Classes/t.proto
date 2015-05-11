@@ -1,0 +1,7 @@
+
+message C2SLogin
+{
+	required int32 channelId = 1;   
+	required string channelAccountId = 2; 
+	optional string loginToken = 3; 
+}
