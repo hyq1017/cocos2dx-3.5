@@ -156,9 +156,12 @@ void Layer_Tetris::StartTimer()
 
 void Layer_Tetris::Loop(float)
 {
-	l_s_p_tetris->ConvertOnEnter();
-	l_s_p_tetris->Down();
-	l_s_p_tetris->ConvertOnExit();
+	if (l_s_p_tetris)
+	{
+		l_s_p_tetris->ConvertOnEnter();
+		l_s_p_tetris->Down();
+		l_s_p_tetris->ConvertOnExit();
+	}
 	DrawTetris();
 	CheckCleanUp();
 }
@@ -338,25 +341,34 @@ void Layer_Tetris::menuCallback_backLobby(Ref* sender)
 
 void Layer_Tetris::event_left()
 {
-	l_s_p_tetris->ConvertOnEnter();
-	l_s_p_tetris->Left();
-	l_s_p_tetris->ConvertOnExit();
+	if (l_s_p_tetris)
+	{
+		l_s_p_tetris->ConvertOnEnter();
+		l_s_p_tetris->Left();
+		l_s_p_tetris->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
 void Layer_Tetris::event_right()
 {
-	l_s_p_tetris->ConvertOnEnter();
-	l_s_p_tetris->Right();
-	l_s_p_tetris->ConvertOnExit();
+	if (l_s_p_tetris)
+	{
+		l_s_p_tetris->ConvertOnEnter();
+		l_s_p_tetris->Right();
+		l_s_p_tetris->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
 void Layer_Tetris::event_down()
 {
-	l_s_p_tetris->ConvertOnEnter();
-	l_s_p_tetris->Down();
-	l_s_p_tetris->ConvertOnExit();
+	if (l_s_p_tetris)
+	{
+		l_s_p_tetris->ConvertOnEnter();
+		l_s_p_tetris->Down();
+		l_s_p_tetris->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
@@ -364,18 +376,24 @@ void Layer_Tetris::event_bottom()
 {
 	for (int i = 0; i < C_ROW_BOTTOM; i++)
 	{
-		l_s_p_tetris->ConvertOnEnter();
-		l_s_p_tetris->Down();
-		l_s_p_tetris->ConvertOnExit();
+		if (l_s_p_tetris)
+		{
+			l_s_p_tetris->ConvertOnEnter();
+			l_s_p_tetris->Down();
+			l_s_p_tetris->ConvertOnExit();
+		}
 		DrawTetris();
 	}
 }
 
 void Layer_Tetris::event_transform()
 {
-	l_s_p_tetris->ConvertOnEnter();
-	l_s_p_tetris->Transform();
-	l_s_p_tetris->ConvertOnExit();
+	if (l_s_p_tetris)
+	{
+		l_s_p_tetris->ConvertOnEnter();
+		l_s_p_tetris->Transform();
+		l_s_p_tetris->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
@@ -389,7 +407,6 @@ void Layer_Tetris::event_restart()
 			//g_marks[i][j].is_block = false;
 		}
 	}
-
 	CreateNextTetris();
 	DrawTetris();
 	UpdateScore();

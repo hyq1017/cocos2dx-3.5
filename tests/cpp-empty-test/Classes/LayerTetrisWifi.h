@@ -44,6 +44,8 @@ public:
 	void event_transform();
 	void event_restart();
 private:
+	bool m_b_bottom;
+	long m_t_touchBegin;
 	Point m_point_touchBegin;
 	//Point m_point_touchEnd;
 	LayerColor* m_layer_game_1;

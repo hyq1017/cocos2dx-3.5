@@ -1,10 +1,17 @@
 #include "SceneLobby.h"
 #include "LayerTetris.h"
 #include "LayerTetrisWifi.h"
-#include "tpb.h"
+//#include "tpb.h"
 #include <iostream>
 
+
+#include "MsgId_pb.h"
+#include "C2S_pb.h"
+#include "S2C_pb.h"
+#include "test_pb.h"
+
 using namespace std;
+using namespace tetris_protocol;
 
 Scene* SceneLobby::scene()
 {
@@ -83,26 +90,37 @@ void SceneLobby::CallbackStart(Ref* sender)
 void SceneLobby::CallbackRank(Ref* sender)
 {
 	CCLOG("CallbackRank");
-	//Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
+	Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
 	
+	tetris_protocol::C2SLogin *loginbuf = new tetris_protocol::C2SLogin();
 
-	C2SLogin* loginbuf = new C2SLogin();
-	loginbuf->set_channelid(9999);
-	loginbuf->set_channelaccountid("2");
-	loginbuf->set_logintoken("test");
-	string s;
-	loginbuf->SerializeToString(&s);
-	string sTmp = loginbuf->SerializeAsString();
-	send_data sendData;
-	sendData.sign = 127;
-	sendData.len = s.length()+4;
-	sendData.body = (char*)s.c_str();
+	//tetris_protocol::C2SMsg* msg = new tetris_protocol::C2SMsg();//dynamic_cast<C2SMsg*>(new tetris_protocol::C2SLogin());//new tetris_protocol::C2SMsg();
+	//msg->set_msgid(C2S_Login);
+	//dynamic_cast<C2SLogin*>(msg)->set_channelid(9999);
+	//dynamic_cast<C2SLogin*>(msg)->set_channelaccountid("hyq");
+	//dynamic_cast<C2SLogin*>(msg)->set_logintoken("test");
+	//loginbuf->set_channelid(9999);
+	//loginbuf->set_channelaccountid("hyq");
+	//loginbuf->set_logintoken("test");
+	//
+	//tetris_protocol::C2SMsg* msg = new tetris_protocol::C2SMsg();//(C2SMsg*)(loginbuf);
+	//msg->set_msgid(C2S_Login);
+	////msg->AppendToString();
+	////C2SLogin* lTmp = (C2SLogin*) (msg);
+	//string s;
+	//msg->SerializeToString(&s);
+	////string sTmp = loginbuf->SerializeAsString();
+	//send_data sendData;
+	//sendData.sign = 127;
+	//sendData.len = s.length()+4;
+	//sendData.body = (char*)s.c_str();
 
+	//hyq::HyqLogin* l = new hyq::HyqLogin();
 
-	TetrisSocket::getInstance()->send_message(sendData);
+	//TetrisSocket::getInstance()->send_message(sendData);
 
-	delete loginbuf;
-	loginbuf = 0;
+	////delete loginbuf;
+	//loginbuf = 0;
 
 	//char* begin = TetrisSocket::getInstance()->unsign_short_to_bytes(127);
 	//char* len = TetrisSocket::getInstance()->unsign_short_to_bytes(strlen(login.body)+4);

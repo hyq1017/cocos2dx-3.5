@@ -34,6 +34,10 @@ public:
 
 	void setBlocksPointer(BlocksPointer tmp);
 	BlocksPointer getBlocksPointer(){ return m_marks; };
+
+	bool isBlock(int row, int column);
+	void setMarksBlock(const int& row, const int& column);
+
 private:
 	Block m_block;
 	TetrisKind m_kind;

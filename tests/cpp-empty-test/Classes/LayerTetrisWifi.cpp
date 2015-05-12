@@ -18,7 +18,9 @@ m_layer_gameTitle_2(0),
 m_layer_gameTitle_3(0),
 m_layer_prop(0),
 m_layer_myInfo(0),
-m_layer_myTip(0)
+m_layer_myTip(0),
+m_b_bottom(false),
+m_t_touchBegin(0.0)
 {
 
 
@@ -253,6 +255,13 @@ void Layer_TetrisWifi::onTouchesBegan(const std::vector<Touch*>& touches, Event 
 	auto touch = static_cast<Touch*>(touches[0]);
 
 	m_point_touchBegin = touch->getLocation();
+	m_b_bottom = false;
+
+	struct  timeval tv;
+	gettimeofday(&tv, NULL);
+	m_t_touchBegin = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	//log(tmp);
+	//return  tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
 void Layer_TetrisWifi::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
@@ -260,19 +269,55 @@ void Layer_TetrisWifi::onTouchesMoved(const std::vector<Touch*>& touches, Event 
 	auto touch = static_cast<Touch*>(touches[0]);
 
 	auto touchLocation = touch->getLocation();
+
 	float nMoveX = touchLocation.x - m_point_touchBegin.x;
-	if (nMoveX)
+	int nMoveY = touchLocation.y - m_point_touchBegin.y;
+
+	if (abs(nMoveX) > abs(nMoveY))
 	{
-
+		if (nMoveX >= C_W_RECT)
+		{
+			event_right();
+		}
+		if (nMoveX < 0 && nMoveX <= -C_W_RECT)
+		{
+			event_left();
+		}
 	}
-
-
-
+	else
+	{
+		if (nMoveY < 0 && (-nMoveY) >= C_W_RECT)
+		{
+			if ((-nMoveY) >= 3 * C_W_RECT)
+			{
+				m_b_bottom = true;
+			}
+			else
+			{
+				event_down();
+			}
+		}
+	}
 }
 
 void Layer_TetrisWifi::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
 {
+	auto touch = static_cast<Touch*>(touches[0]);
 
+	auto touchLocation = touch->getLocation();
+	if (touchLocation==m_point_touchBegin)
+	{
+		event_transform();
+	}
+	struct  timeval tv;
+	gettimeofday(&tv, NULL);
+	long tmp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	long s = tmp - m_t_touchBegin;
+	if (m_b_bottom && s < 300)
+	{//时间在0.3s内才能执行
+		event_bottom();
+	}
+	m_point_touchBegin = touch->getLocation();
 }
 
 void Layer_TetrisWifi::onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event)
@@ -289,9 +334,12 @@ void Layer_TetrisWifi::setSpeed(const float t)
 
 void Layer_TetrisWifi::Loop(float)
 {
-	l_s_p_tetris_1->ConvertOnEnter();
-	l_s_p_tetris_1->Down();
-	l_s_p_tetris_1->ConvertOnExit();
+	if (l_s_p_tetris_1)
+	{
+		l_s_p_tetris_1->ConvertOnEnter();
+		l_s_p_tetris_1->Down();
+		l_s_p_tetris_1->ConvertOnExit();
+	}
 	DrawTetris();
 	CheckCleanUp();
 }
@@ -327,6 +375,7 @@ void Layer_TetrisWifi::CreateNextTetris()
 	{
 		CopyAllBlocks(l_s_p_tetris_1->getBlocksPointer(), blocks);
 		delete(l_s_p_tetris_1);
+		l_s_p_tetris_1 = 0;
 	}
 	l_s_p_tetris_1 = Tetris::Create(TetrisKind(rand() % E_5_4));
 	l_s_p_tetris_1->setBlocksPointer(blocks);
@@ -346,25 +395,34 @@ void Layer_TetrisWifi::StopTimer()
 
 void Layer_TetrisWifi::event_left()
 {
-	l_s_p_tetris_1->ConvertOnEnter();
-	l_s_p_tetris_1->Left();
-	l_s_p_tetris_1->ConvertOnExit();
+	if (l_s_p_tetris_1)
+	{
+		l_s_p_tetris_1->ConvertOnEnter();
+		l_s_p_tetris_1->Left();
+		l_s_p_tetris_1->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
 void Layer_TetrisWifi::event_right()
 {
-	l_s_p_tetris_1->ConvertOnEnter();
-	l_s_p_tetris_1->Right();
-	l_s_p_tetris_1->ConvertOnExit();
+	if (l_s_p_tetris_1)
+	{
+		l_s_p_tetris_1->ConvertOnEnter();
+		l_s_p_tetris_1->Right();
+		l_s_p_tetris_1->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
 void Layer_TetrisWifi::event_down()
 {
-	l_s_p_tetris_1->ConvertOnEnter();
-	l_s_p_tetris_1->Down();
-	l_s_p_tetris_1->ConvertOnExit();
+	if (l_s_p_tetris_1)
+	{
+		l_s_p_tetris_1->ConvertOnEnter();
+		l_s_p_tetris_1->Down();
+		l_s_p_tetris_1->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
@@ -372,18 +430,24 @@ void Layer_TetrisWifi::event_bottom()
 {
 	for (int i = 0; i < C_ROW_BOTTOM; i++)
 	{
-		l_s_p_tetris_1->ConvertOnEnter();
-		l_s_p_tetris_1->Down();
-		l_s_p_tetris_1->ConvertOnExit();
+		if (l_s_p_tetris_1)
+		{
+			l_s_p_tetris_1->ConvertOnEnter();
+			l_s_p_tetris_1->Down();
+			l_s_p_tetris_1->ConvertOnExit();
+		}
 		DrawTetris();
 	}
 }
 
 void Layer_TetrisWifi::event_transform()
 {
-	l_s_p_tetris_1->ConvertOnEnter();
-	l_s_p_tetris_1->Transform();
-	l_s_p_tetris_1->ConvertOnExit();
+	if (l_s_p_tetris_1)
+	{
+		l_s_p_tetris_1->ConvertOnEnter();
+		l_s_p_tetris_1->Transform();
+		l_s_p_tetris_1->ConvertOnExit();
+	}
 	DrawTetris();
 }
 
