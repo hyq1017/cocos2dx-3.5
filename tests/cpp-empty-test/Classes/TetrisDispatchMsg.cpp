@@ -1,5 +1,12 @@
 #include "TetrisDispatchMsg.h"
+#include "S2C_pb.h"
+#include "C2S_pb.h"
 
+
+using namespace tetris_protocol;
+
+
+TetrisDispatchMsg* TetrisDispatchMsg::m_instance = 0;
 
 TetrisDispatchMsg::TetrisDispatchMsg(void)
 {
@@ -14,6 +21,26 @@ TetrisDispatchMsg::~TetrisDispatchMsg(void)
 	//pthread_mutex_destroy(&_mutex);
 	this->unscheduleUpdate();
 }
+
+
+void TetrisDispatchMsg::Destory()
+{
+	if (m_instance)
+	{
+		delete m_instance;
+		m_instance = 0;
+	}
+}
+
+TetrisDispatchMsg* TetrisDispatchMsg::GetInstance()
+{
+	if (m_instance)
+	{
+		m_instance = new TetrisDispatchMsg();
+	}
+	return m_instance;
+};
+
 
 void TetrisDispatchMsg::addEvent(TetrisMessage *msg)
 {
@@ -32,11 +59,9 @@ void TetrisDispatchMsg::update( float fDelta )
 	_mutex.lock();
 	//解析发送过来的消息
 	if (Queues.size()>0) 
-	{
+	{//消息分发部分 掉Lua消息分发脚本
 		TetrisMessage *msg = Queues.front();
-		//消息分发部分 掉Lua消息分发脚本
-		//JHCallLua::getInstance()->NotifyLua(msg->_msgBody);
-		//pop/delete/null
+		dispatch(msg);
 		Queues.pop();
 		delete msg;
 		msg = NULL;
@@ -52,6 +77,25 @@ void TetrisDispatchMsg::removeAll()
 	{
 		Queues.pop();
 	}
+}
+
+void TetrisDispatchMsg::dispatch(TetrisMessage *msg)
+{
+	tetris_protocol::S2CMsg* s2cMsg = new tetris_protocol::S2CMsg();//S2CMsg::ParseFromString(s);
+	if (s2cMsg)
+	{
+		s2cMsg->ParseFromString(msg->getData().body);
+		switch (s2cMsg->msgid())
+		{
+		case C2S_Login:
+		{
+			log("c2slogin recieve success!!");
+		}break;
+		default:
+			break;
+		}
+	}
+	
 }
 
 

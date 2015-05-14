@@ -23,24 +23,355 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
+#include "MsgId_pb.h"
 // @@protoc_insertion_point(includes)
+
+namespace tetris_protocol {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_S2C_2eproto();
 void protobuf_AssignDesc_S2C_2eproto();
 void protobuf_ShutdownFile_S2C_2eproto();
 
+class S2CLogin;
+class S2CMsg;
 
+// ===================================================================
+
+class S2CLogin : public ::google::protobuf::Message {
+ public:
+  S2CLogin();
+  virtual ~S2CLogin();
+  
+  S2CLogin(const S2CLogin& from);
+  
+  inline S2CLogin& operator=(const S2CLogin& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2CLogin& default_instance();
+  
+  void Swap(S2CLogin* other);
+  
+  // implements Message ----------------------------------------------
+  
+  S2CLogin* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2CLogin& from);
+  void MergeFrom(const S2CLogin& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 result = 1;
+  inline bool has_result() const;
+  inline void clear_result();
+  static const int kResultFieldNumber = 1;
+  inline ::google::protobuf::int32 result() const;
+  inline void set_result(::google::protobuf::int32 value);
+  
+  // required string accountId = 2;
+  inline bool has_accountid() const;
+  inline void clear_accountid();
+  static const int kAccountIdFieldNumber = 2;
+  inline const ::std::string& accountid() const;
+  inline void set_accountid(const ::std::string& value);
+  inline void set_accountid(const char* value);
+  inline void set_accountid(const char* value, size_t size);
+  inline ::std::string* mutable_accountid();
+  inline ::std::string* release_accountid();
+  
+  // @@protoc_insertion_point(class_scope:tetris_protocol.S2CLogin)
+ private:
+  inline void set_has_result();
+  inline void clear_has_result();
+  inline void set_has_accountid();
+  inline void clear_has_accountid();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::std::string* accountid_;
+  ::google::protobuf::int32 result_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_S2C_2eproto();
+  friend void protobuf_AssignDesc_S2C_2eproto();
+  friend void protobuf_ShutdownFile_S2C_2eproto();
+  
+  void InitAsDefaultInstance();
+  static S2CLogin* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class S2CMsg : public ::google::protobuf::Message {
+ public:
+  S2CMsg();
+  virtual ~S2CMsg();
+  
+  S2CMsg(const S2CMsg& from);
+  
+  inline S2CMsg& operator=(const S2CMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const S2CMsg& default_instance();
+  
+  void Swap(S2CMsg* other);
+  
+  // implements Message ----------------------------------------------
+  
+  S2CMsg* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const S2CMsg& from);
+  void MergeFrom(const S2CMsg& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .tetris_protocol.MsgId msgId = 1;
+  inline bool has_msgid() const;
+  inline void clear_msgid();
+  static const int kMsgIdFieldNumber = 1;
+  inline tetris_protocol::MsgId msgid() const;
+  inline void set_msgid(tetris_protocol::MsgId value);
+  
+  // optional .tetris_protocol.S2CLogin login = 2;
+  inline bool has_login() const;
+  inline void clear_login();
+  static const int kLoginFieldNumber = 2;
+  inline const ::tetris_protocol::S2CLogin& login() const;
+  inline ::tetris_protocol::S2CLogin* mutable_login();
+  inline ::tetris_protocol::S2CLogin* release_login();
+  
+  // @@protoc_insertion_point(class_scope:tetris_protocol.S2CMsg)
+ private:
+  inline void set_has_msgid();
+  inline void clear_has_msgid();
+  inline void set_has_login();
+  inline void clear_has_login();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::tetris_protocol::S2CLogin* login_;
+  int msgid_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_S2C_2eproto();
+  friend void protobuf_AssignDesc_S2C_2eproto();
+  friend void protobuf_ShutdownFile_S2C_2eproto();
+  
+  void InitAsDefaultInstance();
+  static S2CMsg* default_instance_;
+};
 // ===================================================================
 
 
 // ===================================================================
 
+// S2CLogin
 
-// ===================================================================
+// required int32 result = 1;
+inline bool S2CLogin::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2CLogin::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2CLogin::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2CLogin::clear_result() {
+  result_ = 0;
+  clear_has_result();
+}
+inline ::google::protobuf::int32 S2CLogin::result() const {
+  return result_;
+}
+inline void S2CLogin::set_result(::google::protobuf::int32 value) {
+  set_has_result();
+  result_ = value;
+}
+
+// required string accountId = 2;
+inline bool S2CLogin::has_accountid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2CLogin::set_has_accountid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2CLogin::clear_has_accountid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2CLogin::clear_accountid() {
+  if (accountid_ != &::google::protobuf::internal::kEmptyString) {
+    accountid_->clear();
+  }
+  clear_has_accountid();
+}
+inline const ::std::string& S2CLogin::accountid() const {
+  return *accountid_;
+}
+inline void S2CLogin::set_accountid(const ::std::string& value) {
+  set_has_accountid();
+  if (accountid_ == &::google::protobuf::internal::kEmptyString) {
+    accountid_ = new ::std::string;
+  }
+  accountid_->assign(value);
+}
+inline void S2CLogin::set_accountid(const char* value) {
+  set_has_accountid();
+  if (accountid_ == &::google::protobuf::internal::kEmptyString) {
+    accountid_ = new ::std::string;
+  }
+  accountid_->assign(value);
+}
+inline void S2CLogin::set_accountid(const char* value, size_t size) {
+  set_has_accountid();
+  if (accountid_ == &::google::protobuf::internal::kEmptyString) {
+    accountid_ = new ::std::string;
+  }
+  accountid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* S2CLogin::mutable_accountid() {
+  set_has_accountid();
+  if (accountid_ == &::google::protobuf::internal::kEmptyString) {
+    accountid_ = new ::std::string;
+  }
+  return accountid_;
+}
+inline ::std::string* S2CLogin::release_accountid() {
+  clear_has_accountid();
+  if (accountid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = accountid_;
+    accountid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
+// -------------------------------------------------------------------
+
+// S2CMsg
+
+// required .tetris_protocol.MsgId msgId = 1;
+inline bool S2CMsg::has_msgid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void S2CMsg::set_has_msgid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void S2CMsg::clear_has_msgid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void S2CMsg::clear_msgid() {
+  msgid_ = 100000;
+  clear_has_msgid();
+}
+inline tetris_protocol::MsgId S2CMsg::msgid() const {
+  return static_cast< tetris_protocol::MsgId >(msgid_);
+}
+inline void S2CMsg::set_msgid(tetris_protocol::MsgId value) {
+  GOOGLE_DCHECK(tetris_protocol::MsgId_IsValid(value));
+  set_has_msgid();
+  msgid_ = value;
+}
+
+// optional .tetris_protocol.S2CLogin login = 2;
+inline bool S2CMsg::has_login() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void S2CMsg::set_has_login() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void S2CMsg::clear_has_login() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void S2CMsg::clear_login() {
+  if (login_ != NULL) login_->::tetris_protocol::S2CLogin::Clear();
+  clear_has_login();
+}
+inline const ::tetris_protocol::S2CLogin& S2CMsg::login() const {
+  return login_ != NULL ? *login_ : *default_instance_->login_;
+}
+inline ::tetris_protocol::S2CLogin* S2CMsg::mutable_login() {
+  set_has_login();
+  if (login_ == NULL) login_ = new ::tetris_protocol::S2CLogin;
+  return login_;
+}
+inline ::tetris_protocol::S2CLogin* S2CMsg::release_login() {
+  clear_has_login();
+  ::tetris_protocol::S2CLogin* temp = login_;
+  login_ = NULL;
+  return temp;
+}
 
 
 // @@protoc_insertion_point(namespace_scope)
+
+}  // namespace tetris_protocol
 
 #ifndef SWIG
 namespace google {

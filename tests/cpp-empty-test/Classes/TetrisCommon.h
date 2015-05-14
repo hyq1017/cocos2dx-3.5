@@ -1,13 +1,14 @@
 #ifndef  __TETRIS_COMMON_H__
 #define __TETRIS_COMMON_H__
+
+
 #include "cocos2d.h"
-#include "TetrisMessage.h"
-#include "TetrisSocket.h"
 #include <math.h>
+
 
 using namespace cocos2d;
 
-#pragma  once
+
 
 //每个方块的长度和宽度
 const int C_W_RECT = 12;
@@ -80,15 +81,27 @@ struct Block
 
 typedef Block(*BlocksPointer)[C_COLUMN];
 
-void CopyAllBlocks(BlocksPointer src, BlocksPointer dest);
-//{
-//	for (int i = 0; i < C_ROW; i++)
-//	{
-//		for (int j = 0; j < C_COLUMN; j++)
-//		{
-//			dest[i][j].copy(src[i][j]);
-//		}
-//	}
-//}
+
+
+
+class TetrisDispatchMsg;
+
+class TetrisCommon
+{
+public:
+	TetrisCommon();
+	~TetrisCommon();
+	static TetrisDispatchMsg* getDispatcher();
+	
+	static void DestoryDispatcher();
+	
+	
+	static void CopyAllBlocks(BlocksPointer src, BlocksPointer dest);
+private:
+	static TetrisDispatchMsg* m_s_dipatcher;
+};
+
+
+
 
 #endif

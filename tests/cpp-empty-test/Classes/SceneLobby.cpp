@@ -9,6 +9,9 @@
 #include "C2S_pb.h"
 #include "S2C_pb.h"
 #include "test_pb.h"
+#include "TetrisSocket.h"
+#include "TetrisSocketCommon.h"
+
 
 using namespace std;
 using namespace tetris_protocol;
@@ -72,7 +75,7 @@ void SceneLobby::onEnter()
 {
 	Layer::onEnter();
 	
-	TetrisSocket::getInstance()->start("115.28.92.94", 7007); //("121.42.52.249", 5060);//("115.28.92.94", 7000);
+	TetrisSocket::getInstance()->start("127.0.0.1", 7000); //("127.0.0.1", 6000);//("115.28.92.94", 7007); //("121.42.52.249", 5060);//("115.28.92.94", 7000);
 
 }
 
@@ -90,59 +93,24 @@ void SceneLobby::CallbackStart(Ref* sender)
 void SceneLobby::CallbackRank(Ref* sender)
 {
 	CCLOG("CallbackRank");
-	Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
+	//Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
 	
 	tetris_protocol::C2SLogin *loginbuf = new tetris_protocol::C2SLogin();
-
-	//tetris_protocol::C2SMsg* msg = new tetris_protocol::C2SMsg();//dynamic_cast<C2SMsg*>(new tetris_protocol::C2SLogin());//new tetris_protocol::C2SMsg();
-	//msg->set_msgid(C2S_Login);
-	//dynamic_cast<C2SLogin*>(msg)->set_channelid(9999);
-	//dynamic_cast<C2SLogin*>(msg)->set_channelaccountid("hyq");
-	//dynamic_cast<C2SLogin*>(msg)->set_logintoken("test");
-	//loginbuf->set_channelid(9999);
-	//loginbuf->set_channelaccountid("hyq");
-	//loginbuf->set_logintoken("test");
-	//
-	//tetris_protocol::C2SMsg* msg = new tetris_protocol::C2SMsg();//(C2SMsg*)(loginbuf);
-	//msg->set_msgid(C2S_Login);
-	////msg->AppendToString();
-	////C2SLogin* lTmp = (C2SLogin*) (msg);
-	//string s;
-	//msg->SerializeToString(&s);
-	////string sTmp = loginbuf->SerializeAsString();
-	//send_data sendData;
-	//sendData.sign = 127;
-	//sendData.len = s.length()+4;
-	//sendData.body = (char*)s.c_str();
-
-	//hyq::HyqLogin* l = new hyq::HyqLogin();
-
-	//TetrisSocket::getInstance()->send_message(sendData);
-
-	////delete loginbuf;
-	//loginbuf = 0;
-
-	//char* begin = TetrisSocket::getInstance()->unsign_short_to_bytes(127);
-	//char* len = TetrisSocket::getInstance()->unsign_short_to_bytes(strlen(login.body)+4);
-	//char *tmp = new char(strlen(begin) + strlen(len) + s.length());
-	//memcpy(tmp, begin, strlen(begin));
-	//memcpy(tmp + strlen(begin), len, strlen(len));
-	//memcpy(tmp + strlen(begin) + strlen(begin), (char*)s.c_str(), s.length());
-	////login.totalLen = login.bodyLen + 1 + strlen(login.cmd) + 4;
-	//
-	//TetrisMessage* msg = new TetrisMessage(login.cmd, login.body);
-
 	
-	//TetrisSocket::getInstance()->sendMessage(tmp, strlen(begin) + strlen(begin) + s.length());
-	
-	//string  netMsg;
-	//loginbuf->SerializeToString(&netMsg);
-	//char* mark = TetrisSocket::getInstance()->unsign_short_to_bytes(127);
-	//char* length = TetrisSocket::getInstance()->unsign_short_to_bytes(netMsg.length() + 4);
-	//char* ss = TetrisSocket::getInstance()->unsign_short_to_bytes(127, false);
+	hyq::HyqLogin* l = new hyq::HyqLogin();
+	l->set_channelaccountid("hyq");
+	l->set_channelid(9999);
+	l->set_logintoken("hello");
 
-	//log("ss");
-	//log(ss);
+	string s;
+	l->SerializeToString(&s);
+
+	MSG_DATA data;
+	data.sign = 127;
+	data.len = s.length();
+	data.body = (char*)s.c_str();
+
+	TetrisSocket::getInstance()->send_message(data);
 	
 }
 

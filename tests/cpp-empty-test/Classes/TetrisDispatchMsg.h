@@ -4,11 +4,8 @@
 #include <queue>  
 #include <numeric> 
 #include <algorithm>
-//#include "pthread/pthread.h"
 #include "TetrisMessage.h"
-//#include "TetrisCallLua.h"
-//#include "TetrisDefine.h"
-//#include "JHLuaCallC.h"
+
 
 
 class TetrisDispatchMsg : public cocos2d::CCNode
@@ -25,6 +22,10 @@ public:
 	// remove all messages
 	void removeAll();
 
+	void dispatch(TetrisMessage *msg);
+
+	static TetrisDispatchMsg* GetInstance();
+	static void Destory();
 private:
 
 	//messages queue
@@ -32,6 +33,7 @@ private:
 	//thread mutex 
 	//pthread_mutex_t _mutex;
 	std::mutex _mutex;
+	static TetrisDispatchMsg* m_instance;
 
 };
 

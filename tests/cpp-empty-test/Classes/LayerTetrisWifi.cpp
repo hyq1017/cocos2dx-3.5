@@ -373,7 +373,7 @@ void Layer_TetrisWifi::CreateNextTetris()
 	Block blocks[C_ROW][C_COLUMN] = { 0 };
 	if (l_s_p_tetris_1)
 	{
-		CopyAllBlocks(l_s_p_tetris_1->getBlocksPointer(), blocks);
+		TetrisCommon::CopyAllBlocks(l_s_p_tetris_1->getBlocksPointer(), blocks);
 		delete(l_s_p_tetris_1);
 		l_s_p_tetris_1 = 0;
 	}

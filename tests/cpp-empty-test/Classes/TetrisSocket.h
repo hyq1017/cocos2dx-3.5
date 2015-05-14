@@ -1,8 +1,10 @@
 #pragma once
-//#include "JHMessage.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include "TetrisCommon.h"
+#include "TetrisSocketCommon.h"
 
 using namespace std;
 
@@ -16,12 +18,7 @@ using namespace std;
 #endif
 
 
-struct send_data
-{
-	short sign;
-	short len;
-	char*body;
-};
+
 
 struct Request {
 	char id;
@@ -45,26 +42,19 @@ public:
 	static void* loopReceive(void* param);
 
 	int start(const char* host, int port);
-	int sendMessage(Request req);
-	int sendMessage(send_data req);
-	int sendMessage(char* data, int len);
+	//int sendMessage(char* data, int len);
 	void startReceiveThread();
 	int close();
-	char* unsign_short_to_bytes(short num, bool bSmall=false);
-	int send_message(send_data req);
-
-
+	int send_message(MSG_DATA data);
 private:
 	TetrisSocket(void);
 	~TetrisSocket(void);
 
 	
-	char* convertRequestToCharArray(send_data req);
-	char* convertRequestToCharArray(Request req);
-	//char* convertIntToCharArray(int data);
+
 	char* convertIntToCharArray(short data);
-	int getTotalLength();
-	Response* decode();
+	short getTotalLength();
+	MSG_DATA* decode();
 	//void stopReceiveThread();
 	static const int BUF_SIZE = 1024 * 64;
 	static const int RECV_SIZE = 1024;

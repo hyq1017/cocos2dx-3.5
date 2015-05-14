@@ -322,7 +322,7 @@ void Layer_Tetris::CreateNextTetris()
 	Block blocks[C_ROW][C_COLUMN] = { 0 };
 	if (l_s_p_tetris)
 	{
-		CopyAllBlocks(l_s_p_tetris->getBlocksPointer(), blocks);
+		TetrisCommon::CopyAllBlocks(l_s_p_tetris->getBlocksPointer(), blocks);
 		delete(l_s_p_tetris);
 	}
 	l_s_p_tetris = Tetris::Create(TetrisKind(rand() % E_5_4));

@@ -175,6 +175,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\TetrisDispatchMsg.h" />
     <ClInclude Include="..\Classes\TetrisMessage.h" />
     <ClInclude Include="..\Classes\TetrisSocket.h" />
+    <ClInclude Include="..\Classes\TetrisSocketCommon.h" />
     <ClInclude Include="..\Classes\tpb.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
