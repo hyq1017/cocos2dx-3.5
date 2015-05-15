@@ -11,6 +11,7 @@
 #include "test_pb.h"
 #include "TetrisSocket.h"
 #include "TetrisSocketCommon.h"
+#include "TetrisMessage.h"
 
 
 using namespace std;
@@ -93,17 +94,17 @@ void SceneLobby::CallbackStart(Ref* sender)
 void SceneLobby::CallbackRank(Ref* sender)
 {
 	CCLOG("CallbackRank");
-	//Director::getInstance()->replaceScene(TransitionFadeDown::create(1.0f, Layer_TetrisWifi::scene()));
-	
-	tetris_protocol::C2SLogin *loginbuf = new tetris_protocol::C2SLogin();
-	
-	hyq::HyqLogin* l = new hyq::HyqLogin();
-	l->set_channelaccountid("hyq");
-	l->set_channelid(9999);
-	l->set_logintoken("hello");
+
+
+	C2SMsg* msg = new C2SMsg();
+	msg->set_msgid(C2S_Login);
+	C2SLogin* login = msg->mutable_login();
+	login->set_channelaccountid("hyq-hello");
+	login->set_channelid(9999);
+	login->set_logintoken("t_hyq");
 
 	string s;
-	l->SerializeToString(&s);
+	msg->SerializeToString(&s);
 
 	MSG_DATA data;
 	data.sign = 127;
@@ -111,6 +112,9 @@ void SceneLobby::CallbackRank(Ref* sender)
 	data.body = (char*)s.c_str();
 
 	TetrisSocket::getInstance()->send_message(data);
+
+	delete msg;
+	msg = 0;
 	
 }
 

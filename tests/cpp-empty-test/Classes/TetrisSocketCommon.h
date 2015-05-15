@@ -15,10 +15,10 @@ struct MSG_DATA
 	short sign;
 	short len;
 	char*body;
-	void copy(MSG_DATA data)
+	MSG_DATA()
 	{
-		sign = data.sign;
-		len = data.len;
-		std::memcpy(body, data.body, len - MSG_HEAD_LEN);
+		sign = MSG_TAG;
+		len = 0;
+		body = 0;
 	}
 };

@@ -137,7 +137,9 @@ void* TetrisSocket::loopReceive(void* param) {
 		MSG_DATA* msgData = mInstance->decode();
 		if (msgData)
 		{
-			TetrisDispatchMsg::GetInstance()->addEvent(new TetrisMessage(msgData));
+			TetrisMessage* msg = new TetrisMessage(msgData);
+			
+			TetrisDispatchMsg::GetInstance()->addEvent(msg);
 		}
 		
 		FD_ZERO(&readfds);
@@ -230,18 +232,19 @@ short TetrisSocket::getTotalLength() {
 
 	//memcpy(&totalLen, tmp, 4);
 	//return totalLen;
-	short total = 0;
-	char tmp[MSG_TOTALLEN_LEN];
-	memcpy(tmp, mInstance->buf+MSG_SIGN_LEN, MSG_TOTALLEN_LEN);
-	for (int i = 0; i < MSG_TOTALLEN_LEN; i++)
-	 {
-		 if (tmp[i] < 0)
-		 {
-			 tmp[i] = tmp[i] & 0xFF;
-		 }
-	 }
 
-	 memcpy(&total, tmp, 4);
+	short total = mInstance->buf[MSG_HEAD_LEN-1];
+	//char tmp[MSG_TOTALLEN_LEN];
+	//memcpy(tmp, mInstance->buf+MSG_SIGN_LEN, MSG_TOTALLEN_LEN);
+	//for (int i = 0; i < MSG_TOTALLEN_LEN; i++)
+	// {
+	//	 if (tmp[i] < 0)
+	//	 {
+	//		 tmp[i] = tmp[i] & 0xFF;
+	//	 }
+	// }
+
+	// memcpy(&total, tmp, 4);
 	return total;
 }
 
@@ -287,10 +290,17 @@ int TetrisSocket::send_message(MSG_DATA data)
 
 	int ret = send(sock, senddata, totallen, 0);
 
-	delete []senddata;
-	senddata = 0;
-	delete[]sign;
-	sign = 0;
+	//if (senddata)
+	//{
+	//	delete senddata;
+	//	senddata = 0;
+	//}
+	//if (sign)
+	//{
+	//	delete sign;
+	//	sign = 0;
+	//}
+	
 
 	return ret;
 }

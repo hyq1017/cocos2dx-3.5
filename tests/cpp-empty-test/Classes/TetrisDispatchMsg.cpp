@@ -34,7 +34,7 @@ void TetrisDispatchMsg::Destory()
 
 TetrisDispatchMsg* TetrisDispatchMsg::GetInstance()
 {
-	if (m_instance)
+	if (!m_instance)
 	{
 		m_instance = new TetrisDispatchMsg();
 	}
@@ -62,9 +62,12 @@ void TetrisDispatchMsg::update( float fDelta )
 	{//消息分发部分 掉Lua消息分发脚本
 		TetrisMessage *msg = Queues.front();
 		dispatch(msg);
+		if (msg)
+		{
+			delete msg;
+			msg = NULL;
+		}
 		Queues.pop();
-		delete msg;
-		msg = NULL;
 	}
 	_mutex.unlock();
 	//pthread_mutex_unlock(&_mutex);
@@ -84,10 +87,10 @@ void TetrisDispatchMsg::dispatch(TetrisMessage *msg)
 	tetris_protocol::S2CMsg* s2cMsg = new tetris_protocol::S2CMsg();//S2CMsg::ParseFromString(s);
 	if (s2cMsg)
 	{
-		s2cMsg->ParseFromString(msg->getData().body);
+		s2cMsg->ParseFromString(msg->getData()->body);
 		switch (s2cMsg->msgid())
 		{
-		case C2S_Login:
+		case S2C_Login:
 		{
 			log("c2slogin recieve success!!");
 		}break;
